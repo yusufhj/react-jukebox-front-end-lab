@@ -22,29 +22,32 @@ const TrackForm = ({ handleAddTrack, selectedTrack, handleUpdateTrack }) => {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <input 
-                type="text"
-                id = "title"
-                name="title"
-                value={formData.title}
-                onChange={handleChange}
-                placeholder="Title"
-                required
-            />
-            <input 
-                type="text"
-                id="artist"
-                name="artist"
-                value={formData.artist}
-                onChange={handleChange}
-                placeholder="Artist"
-                required
-            />
-            <button type="submit">
-                {selectedTrack ? 'Update Track' : 'Add New Track'}
-            </button>
-        </form>
+        <>
+            <h1>Add New Track</h1>
+            <form onSubmit={handleSubmit}>
+                <input 
+                    type="text"
+                    id = "title"
+                    name="title"
+                    value={formData.title}
+                    onChange={handleChange}
+                    placeholder="Title"
+                    required
+                />
+                <input 
+                    type="text"
+                    id="artist"
+                    name="artist"
+                    value={formData.artist}
+                    onChange={handleChange}
+                    placeholder="Artist"
+                    required
+                />
+                <button type="submit">
+                    {selectedTrack ? 'Update Track' : 'Add New Track'}
+                </button>
+            </form>
+        </>
     );
 }
 
