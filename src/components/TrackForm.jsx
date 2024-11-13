@@ -1,7 +1,7 @@
 import { useState } from "react";
 
-const TrackForm = ({ handleAddTrack }) => {
-    const initialState = {
+const TrackForm = ({ handleAddTrack, selectedTrack, handleUpdateTrack }) => {
+    const initialState = selectedTrack ? selectedTrack : {
         title: '',
         artist: ''
     };
@@ -14,14 +14,18 @@ const TrackForm = ({ handleAddTrack }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        handleAddTrack(formData);
-        setFormData(initialState);
+        if (selectedTrack) {
+            handleUpdateTrack(formData, selectedTrack._id);
+        } else {
+            handleAddTrack(formData);
+        }
     };
 
     return (
         <form onSubmit={handleSubmit}>
             <input 
                 type="text"
+                id = "title"
                 name="title"
                 value={formData.title}
                 onChange={handleChange}
@@ -30,13 +34,16 @@ const TrackForm = ({ handleAddTrack }) => {
             />
             <input 
                 type="text"
+                id="artist"
                 name="artist"
                 value={formData.artist}
                 onChange={handleChange}
                 placeholder="Artist"
                 required
             />
-            <button type="submit">Submit</button>
+            <button type="submit">
+                {selectedTrack ? 'Update Track' : 'Add New Track'}
+            </button>
         </form>
     );
 }

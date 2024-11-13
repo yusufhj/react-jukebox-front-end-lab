@@ -1,6 +1,13 @@
-const TrackList = ({ trackList, handleFormView, isFormOpen }) => {
+const TrackList = ({ trackList, handleFormView, isFormOpen, updateSelectedTrack }) => {
     const tracks = trackList.map((track) => (
-        <li key={track._id}>{track.title} by {track.artist}</li>
+        <li key={track._id}>
+            {track.title} by {track.artist}
+            <button 
+                onClick={() => { updateSelectedTrack(track); handleFormView(track); }}
+            >
+                Edit
+            </button>
+        </li>
     ));
 
     return (
@@ -20,7 +27,7 @@ const TrackList = ({ trackList, handleFormView, isFormOpen }) => {
             }
             </div>
 
-            
+
         </>
     );
 }

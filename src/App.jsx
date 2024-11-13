@@ -10,6 +10,7 @@ import TrackForm from './components/TrackForm';
 const App = () => {
   const [trackLisk, setTrackList] = useState([]);
   const [isFormOpen, setIsFormOpen] = useState(false);
+  const [selectedTrack, setSelectedTrack] = useState(null);
 
 
   useEffect(() => {
@@ -29,8 +30,13 @@ const App = () => {
     fetchTracks();
   }, []);
 
-  const handleFormView = () => {
+  const handleFormView = (track) => {
+    if (!track.title) setSelectedTrack(null);
     setIsFormOpen(!isFormOpen);
+  }
+
+  const updateSelectedTrack = (track) => {
+    setSelectedTrack(track);
   }
 
   const handleAddTrack = async (formData) => {
@@ -48,21 +54,48 @@ const App = () => {
     }
   }
 
+  const handleUpdateTrack = async (formData, trackId) => {
+    try {
+      const updatedTrack = await trackService.updateTrack(formData, trackId);
+
+      if (updatedTrack.error) {
+        throw new Error(updatedTrack.error);
+      }
+
+      const updatedTrackList = trackLisk.map((track) => {
+        if (track._id !== updatedTrack._id) {
+          return track;
+        }
+        return updatedTrack;
+      })
+
+      setTrackList(updatedTrackList);
+      setSelectedTrack(updatedTrack);
+      setIsFormOpen(false);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return (
     <>
       <TrackList 
         trackList={trackLisk}
         isFormOpen={isFormOpen}
+        updateSelectedTrack={updateSelectedTrack}
         handleFormView={handleFormView}
       />
       {
         isFormOpen ? (
           <TrackForm 
+            selectedTrack={selectedTrack}
             handleAddTrack={handleAddTrack}
-
+            handleUpdateTrack={handleUpdateTrack}
           />
-          
-        ) : null
+
+        ) : (
+          null
+        )
       }
     </>
   )

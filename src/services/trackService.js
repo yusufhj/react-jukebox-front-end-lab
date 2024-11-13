@@ -25,3 +25,19 @@ export const create = async (formData) => {
         console.log(error);
     }
 }
+
+export const updateTrack = async (formData, trackId) => {
+    try {
+        const res = await fetch(`${BASE_URL}/${trackId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
+        });
+        const updatedTrack = await res.json();
+        return updatedTrack;
+    } catch (error) {
+        console.log(error);
+    }
+}
