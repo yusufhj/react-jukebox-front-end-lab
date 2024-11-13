@@ -1,4 +1,5 @@
-const TrackList = ({ trackList, handleFormView, isFormOpen, updateSelectedTrack }) => {
+const TrackList = ({ trackList, handleFormView, isFormOpen, updateSelectedTrack, handleRemoveTrack }) => {
+
     const tracks = trackList.map((track) => (
         <li key={track._id}>
             {track.title} by {track.artist}
@@ -6,6 +7,11 @@ const TrackList = ({ trackList, handleFormView, isFormOpen, updateSelectedTrack 
                 onClick={() => { updateSelectedTrack(track); handleFormView(track); }}
             >
                 Edit
+            </button>
+            <button 
+                onClick={() => handleRemoveTrack(track._id)}
+            >
+                Delete
             </button>
         </li>
     ));

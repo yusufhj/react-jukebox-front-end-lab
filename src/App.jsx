@@ -8,7 +8,7 @@ import TrackList from './components/TrackList';
 import TrackForm from './components/TrackForm';
 
 const App = () => {
-  const [trackLisk, setTrackList] = useState([]);
+  const [trackList, setTrackList] = useState([]);
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [selectedTrack, setSelectedTrack] = useState(null);
 
@@ -47,7 +47,7 @@ const App = () => {
         throw new Error(newTrack.error);
       }
 
-      setTrackList([...trackLisk, newTrack]);
+      setTrackList([...trackList, newTrack]);
       setIsFormOpen(false);
     } catch (error) {
       console.log(error);
@@ -62,7 +62,7 @@ const App = () => {
         throw new Error(updatedTrack.error);
       }
 
-      const updatedTrackList = trackLisk.map((track) => {
+      const updatedTrackList = trackList.map((track) => {
         if (track._id !== updatedTrack._id) {
           return track;
         }
@@ -77,13 +77,31 @@ const App = () => {
     }
   }
 
+  const handleRemoveTrack = async (trackId) => {
+    try {
+      const deletedTrack = await trackService.deleteTrack(trackId);
+      if (deletedTrack.error) {
+        throw new Error(deletedTrack.error);
+      }
+
+      const updatedTrackList = trackList.filter((track) => track._id !== trackId);
+      setTrackList(updatedTrackList);
+      setSelectedTrack(null);
+      setIsFormOpen(false);
+
+    } catch (error) {
+      console.log(error);
+    }
+}
+
   return (
     <>
       <TrackList 
-        trackList={trackLisk}
+        trackList={trackList}
         isFormOpen={isFormOpen}
         updateSelectedTrack={updateSelectedTrack}
         handleFormView={handleFormView}
+        handleRemoveTrack={handleRemoveTrack}
       />
       {
         isFormOpen ? (

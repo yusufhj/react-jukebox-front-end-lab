@@ -41,3 +41,17 @@ export const updateTrack = async (formData, trackId) => {
         console.log(error);
     }
 }
+
+export const deleteTrack = async (trackId) => {
+    try {
+        const deletedTrack = await fetch(`${BASE_URL}/${trackId}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        });
+        return deletedTrack
+    } catch (error) {
+        console.log(error);
+    }
+}
