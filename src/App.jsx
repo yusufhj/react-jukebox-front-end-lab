@@ -124,7 +124,7 @@ const App = () => {
       />
       {
         trackPlaying ?
-        <NowPlaying trackPlaying={trackPlaying} />
+        <NowPlaying trackPlaying={trackPlaying} handlePlayTrack={handlePlayTrack}  />
         :
         null
       }

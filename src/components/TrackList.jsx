@@ -1,7 +1,7 @@
 const TrackList = ({ trackList, handleFormView, isFormOpen, updateSelectedTrack, handleRemoveTrack, handlePlayTrack }) => {
 
     const tracks = trackList.map((track) => (
-        <li key={track._id}>
+        <div key={track._id}>
             {track.title} by {track.artist}
 
             <button onClick={() => handlePlayTrack(track)}>
@@ -18,7 +18,7 @@ const TrackList = ({ trackList, handleFormView, isFormOpen, updateSelectedTrack,
             >
                 Delete
             </button>
-        </li>
+        </div>
     ));
 
     return (
